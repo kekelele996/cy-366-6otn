@@ -12,8 +12,8 @@ export const localFeatures: FeatureItem[] = [
     "id": 2,
     "title": "会员充值与时长包",
     "description": "会员账户支持充值余额，购买时长包（如10小时/30小时/月卡），消费时优先扣除时长包余额，不足时扣余额。",
-    "status": "排期中",
-    "metric": "31 单"
+    "status": "已上线",
+    "metric": "6元/时"
   },
   {
     "id": 3,

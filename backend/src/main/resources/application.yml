@@ -7,8 +7,16 @@ spring:
     driver-class-name: "${SPRING_DATASOURCE_DRIVER:org.h2.Driver}"
     username: "${DB_USER:sa}"
     password: "${DB_PASSWORD:}"
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
   jpa:
     database-platform: "${SPRING_JPA_DATABASE_PLATFORM:org.hibernate.dialect.H2Dialect}"
     hibernate:
       ddl-auto: none
     open-in-view: false
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true

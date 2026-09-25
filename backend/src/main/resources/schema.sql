@@ -1,5 +1,4 @@
--- 电竞馆上机管理系统数据库脚本（与 backend/src/main/resources/schema.sql 保持一致）
--- 应用启动时会自动执行同内容建表，本文件用于手工初始化或排查。
+-- 电竞馆上机管理系统数据库结构（H2 MySQL 模式 / MySQL 8.0 通用，幂等可重复执行）
 
 CREATE TABLE IF NOT EXISTS members (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -85,6 +84,3 @@ CREATE TABLE IF NOT EXISTS operation_records (
   metric VARCHAR(40) NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
-INSERT INTO operation_records (module_name, owner_name, status, metric)
-VALUES ('机位/包厢实时状态看板', '运营组', 'ready', '100%');
