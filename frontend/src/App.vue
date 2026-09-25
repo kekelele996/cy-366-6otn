@@ -8,13 +8,12 @@ import type { OverviewResponse } from "./types";
 import FeatureStrip from "./components/FeatureStrip.vue";
 import MetricGrid from "./components/MetricGrid.vue";
 import OperationsTable from "./components/OperationsTable.vue";
+import SeatBoard from "./components/SeatBoard.vue";
+import MemberCenter from "./components/MemberCenter.vue";
 
+const active = ref<"overview" | "seats" | "members">("seats");
 const overview = ref<OverviewResponse>(createFallbackOverview());
 const notice = ref(REQUEST_MESSAGES.overviewFallback);
-
-function goHealth() {
-  window.location.href = REQUEST_MESSAGES.healthPath;
-}
 
 onMounted(async () => {
   try {
@@ -33,22 +32,34 @@ onMounted(async () => {
         <span class="brand-code">{{ APP_CODE }}</span>
         <h1 class="brand-title">{{ APP_NAME }}</h1>
       </div>
-      <van-button type="primary" @click="goHealth">API Health</van-button>
+      <span class="pill">会员开机结算已接通 · 6 元/小时</span>
     </header>
+
     <section class="workspace">
-      <div class="lead-grid">
-        <article class="hero-panel">
-          <span class="pill">{{ notice }}</span>
-          <h2>{{ overview.appName }}</h2>
-          <p>{{ overview.description }}</p>
-        </article>
-        <MetricGrid :items="overview.kpis" />
-      </div>
-      <FeatureStrip :items="overview.features" />
-      <section class="work-panel">
-        <h2>运营任务流</h2>
-        <OperationsTable :records="overview.records" />
-      </section>
+      <template v-if="active === 'overview'">
+        <div class="lead-grid">
+          <article class="hero-panel">
+            <span class="pill">{{ notice }}</span>
+            <h2>{{ overview.appName }}</h2>
+            <p>{{ overview.description }}</p>
+          </article>
+          <MetricGrid :items="overview.kpis" />
+        </div>
+        <FeatureStrip :items="overview.features" />
+        <section class="work-panel">
+          <h2>运营任务流</h2>
+          <OperationsTable :records="overview.records" />
+        </section>
+      </template>
+
+      <SeatBoard v-else-if="active === 'seats'" />
+      <MemberCenter v-else />
     </section>
+
+    <van-tabbar v-model="active" placeholder safe-area-inset-bottom>
+      <van-tabbar-item name="overview" icon="chart-trending-o">运营总览</van-tabbar-item>
+      <van-tabbar-item name="seats" icon="desktop-o">机位看板</van-tabbar-item>
+      <van-tabbar-item name="members" icon="contact">会员中心</van-tabbar-item>
+    </van-tabbar>
   </main>
 </template>

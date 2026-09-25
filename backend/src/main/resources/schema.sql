@@ -1,6 +1,3 @@
--- 电竞馆上机管理系统初始化脚本
--- 后端容器启动时也会通过 Spring SQL 初始化执行同构脚本，可直接手动在 MySQL 中执行本文件。
-
 CREATE TABLE IF NOT EXISTS members (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   phone VARCHAR(20) NOT NULL UNIQUE,
@@ -59,24 +56,3 @@ CREATE TABLE IF NOT EXISTS operation_records (
   metric VARCHAR(40) NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
-INSERT INTO seats (seat_no, zone, status)
-SELECT 'A01', 'A区', 'IDLE' WHERE NOT EXISTS (SELECT 1 FROM seats WHERE seat_no = 'A01');
-INSERT INTO seats (seat_no, zone, status)
-SELECT 'A02', 'A区', 'IDLE' WHERE NOT EXISTS (SELECT 1 FROM seats WHERE seat_no = 'A02');
-INSERT INTO seats (seat_no, zone, status)
-SELECT 'A03', 'A区', 'IDLE' WHERE NOT EXISTS (SELECT 1 FROM seats WHERE seat_no = 'A03');
-INSERT INTO seats (seat_no, zone, status)
-SELECT 'B01', 'B区', 'IDLE' WHERE NOT EXISTS (SELECT 1 FROM seats WHERE seat_no = 'B01');
-INSERT INTO seats (seat_no, zone, status)
-SELECT 'B02', 'B区', 'IDLE' WHERE NOT EXISTS (SELECT 1 FROM seats WHERE seat_no = 'B02');
-INSERT INTO seats (seat_no, zone, status)
-SELECT 'B03', 'B区', 'BROKEN' WHERE NOT EXISTS (SELECT 1 FROM seats WHERE seat_no = 'B03');
-INSERT INTO seats (seat_no, zone, status)
-SELECT 'VIP01', '包厢区', 'IDLE' WHERE NOT EXISTS (SELECT 1 FROM seats WHERE seat_no = 'VIP01');
-INSERT INTO seats (seat_no, zone, status)
-SELECT 'VIP02', '包厢区', 'IDLE' WHERE NOT EXISTS (SELECT 1 FROM seats WHERE seat_no = 'VIP02');
-
-INSERT INTO operation_records (module_name, owner_name, status, metric)
-SELECT '机位/包厢实时状态看板', '运营组', 'ready', '100%'
-WHERE NOT EXISTS (SELECT 1 FROM operation_records);
